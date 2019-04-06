@@ -142,4 +142,59 @@ table {
     filter: hue-rotate(0);
   }
 }
+.section-bg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  .wrapper{
+
+    i{
+      font-size: 250px;
+      color: #ff0000;
+      transition: ease-in .3s;
+      animation: love 2s infinite;
+    }
+  }
+}
+///////
+@font-face {
+  font-family: 'Fredoka One';
+  src: url('../fonts/FredokaOne-Regular.woff2') format('woff2'),
+  url('../fonts/FredokaOne-Regular.woff') format('woff'),
+  url('../fonts/FredokaOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.wrapper-text {
+  position: fixed;
+  top: 50px;
+  width: 100%;
+  font-size: 75px;
+  text-align: center;
+  p{
+    opacity: 0;
+  }
+}
+
+.wave {
+  font-family: 'Fredoka One';
+  color: #999999;
+  animation: 0.5s color infinite;
+}
+
+@keyframes color {
+  50% {
+    color: #8fc8ae;
+  }
+}
+
+////////
+@keyframes love {
+  0%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(1.1);
+  }
+}

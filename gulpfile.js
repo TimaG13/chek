@@ -6,7 +6,19 @@ var gulp        = require('gulp'),
     prefix      = require('gulp-autoprefixer'),
     sourcemaps  = require('gulp-sourcemaps'),
     imagemin    = require('gulp-imagemin'),
+    browserSync = require('browser-sync').create(),
     rename      = require('gulp-rename');
+
+//server
+gulp.task('serve', ['sass'], function() {
+
+    browserSync.init({
+        server: "./"
+    });
+
+    gulp.watch("./project/sass/**/*.scss", ['sass']);
+    gulp.watch().on('change', browserSync.reload);
+});
 // css
 gulp.task('sass',function () {
     gulp.src('./project/sass/**/*.scss')
@@ -14,13 +26,17 @@ gulp.task('sass',function () {
         .pipe(sass().on('error',sass.logError))
         .pipe(prefix('last 3 versions','> 1%','ie 6'))
         .pipe(minifyCSS())
-        .pipe(rename('style.min.css'))
+        .pipe(rename({
+            suffix: '.min',
+            basename: "style"
+        }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./project/dist/css'));
+        .pipe(gulp.dest('./project/dist/css'))
+        .pipe(browserSync.stream());
 });
 
 // min img
-gulp.task('default', function () {
+gulp.task('img', function () {
     gulp.src('./project/dist/img/*')
         .pipe(imagemin())
         .pipe(gulp.dest('./project/dist/img'))
@@ -39,8 +55,9 @@ gulp.task('js', function () {
         .pipe(gulp.dest('./project/dist/js'));
 });
 
-
 gulp.task('sass:watch',function () {
     gulp.watch('./project/sass/**/*.scss',['sass']);
     gulp.watch(['./project/sass/**/*.js', '!./project/sass/**/*.min.js'], ['js']);
 });
+
+gulp.task('sass-serve', ['serve']);
